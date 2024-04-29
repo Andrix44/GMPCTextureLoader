@@ -23,6 +23,9 @@ namespace GunnerModPC
 
         public static Dictionary<string, byte[]> loaded;
 
+        public string folderPath = "Mods/GMPCTextureLoader/";
+        public string imageExtension = ".png";
+
         public override void OnInitializeMelon()
         {
             config = MelonPreferences.CreateCategory("GMPCTextureLoaderConfig");
@@ -30,16 +33,17 @@ namespace GunnerModPC
             reloadChangedTextures.Description = "When this is enabled, the mod will hash the texture files to see if they changed when loading a new scene. This is useful when designing textures, but can slow down map loading when a lot of data has to be processed.";
 
             loaded = new Dictionary<string, byte[]>();
+
+            Directory.CreateDirectory(folderPath);
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            string path = "Mods/GMPCTextureLoader/";
-            string extension = ".png";
+            
             LoggerInstance.Msg($"Loading texture replacements for scene \"{sceneName}\".");
 
-            HashSet<string> replacements = Directory.GetFiles(path, "*" + extension).Select(p => Path.GetFileNameWithoutExtension(p)).ToHashSet();
-            LoggerInstance.Msg($"Found {replacements.Count} *{extension} texture replacements in \"{path}\".");
+            HashSet<string> replacements = Directory.GetFiles(folderPath, "*" + imageExtension).Select(p => Path.GetFileNameWithoutExtension(p)).ToHashSet();
+            LoggerInstance.Msg($"Found {replacements.Count} *{imageExtension} texture replacements in \"{folderPath}\".");
 
             Texture2D[] textures = Resources.FindObjectsOfTypeAll<Texture2D>();
             LoggerInstance.Msg($"Found {textures.Length} Texture2Ds.");
@@ -47,7 +51,7 @@ namespace GunnerModPC
                 string texName = textures[i].name;
                 if (replacements.Contains(texName))
                 {
-                    string filePath = path + texName + extension;
+                    string filePath = folderPath + texName + imageExtension;
                     if (!loaded.ContainsKey(texName))
                     {
                         LoggerInstance.Msg($"Replacement texture for {texName} has not yet been loaded, reading from file...");
