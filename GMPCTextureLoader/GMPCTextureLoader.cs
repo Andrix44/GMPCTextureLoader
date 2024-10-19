@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System;
 
-[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.1.1", "Andrix")]
+[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.0.1", "Andrix")]
 [assembly: MelonPriority(101)]
 [assembly: MelonGame("Radian Simulations LLC", "GHPC")]
 
@@ -67,7 +67,7 @@ namespace GunnerModPC
                         {
                             LoggerInstance.Error("Failed to upload replacement texture into the GPU memory!");
                         }
-                        // Only mark as loaded if it was uploaded to the GPU succesfully
+                        // Only mark as loaded if it was uploaded to the GPU successfully
                         else
                         {
                             byte[] hash = { 0 };
