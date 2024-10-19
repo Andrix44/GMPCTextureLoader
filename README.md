@@ -14,7 +14,7 @@
 
 ## Extracting textures
 There are multiple ways to do this, probably the easiest is to use ![UnityExplorer](https://github.com/sinai-dev/UnityExplorer) and save every file you need individually.
-Go to `Object Explorer` -> `Object Search` -> set `Class filter` to `UnityEngine.Texture2D` -> set a name filter -> press `Search` -> in the new window click `View Texture` -> `Save .PNG`
+Go to `Object Explorer` -> `Object Search` -> set `Class filter` to `UnityEngine.Texture2D` -> set a name filter -> press `Search` -> select some texture -> in the new window click `View Texture` -> `Save .PNG`
 
 ![Saving textures in UnityExplorer](https://github.com/Andrix44/GMPCTextureLoader/assets/13806656/db5ca46e-560c-48b5-89c1-62184bb3336c)
 

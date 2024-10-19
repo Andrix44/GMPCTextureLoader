@@ -4,27 +4,31 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Unity.Collections;
 using System.Security.Cryptography;
-using System.Xml.Linq;
-using System.Security.Policy;
-using MelonLoader.ICSharpCode.SharpZipLib.Checksum;
 using System;
 
-[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.0.0", "Andrix")]
+[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.1.1", "Andrix")]
+[assembly: MelonPriority(101)]
 [assembly: MelonGame("Radian Simulations LLC", "GHPC")]
 
 namespace GunnerModPC
 {
+    struct ReplacedTexture
+    {
+        public byte[] hash;
+        public Texture2D texture;
+        public HashSet<int> instances;
+    }
+
     public class GMPCTextureLoader : MelonMod
     {
-        public static MelonPreferences_Category config;
-        public static MelonPreferences_Entry<bool> reloadChangedTextures;
+        static MelonPreferences_Category config;
+        static MelonPreferences_Entry<bool> reloadChangedTextures;
 
-        public static Dictionary<string, byte[]> loaded;
+        static Dictionary<string, ReplacedTexture> loaded;
 
-        public string folderPath = "Mods/GMPCTextureLoader/";
-        public string imageExtension = ".png";
+        readonly string folderPath = "Mods/GMPCTextureLoader/";
+        readonly string imageExtension = ".png";
 
         public override void OnInitializeMelon()
         {
@@ -32,7 +36,7 @@ namespace GunnerModPC
             reloadChangedTextures = config.CreateEntry<bool>("reloadChangedTextures", false);
             reloadChangedTextures.Description = "When this is enabled, the mod will hash the texture files to see if they changed when loading a new scene. This is useful when designing textures, but can slow down map loading when a lot of data has to be processed.";
 
-            loaded = new Dictionary<string, byte[]>();
+            loaded = new Dictionary<string, ReplacedTexture>();
 
             Directory.CreateDirectory(folderPath);
         }
@@ -48,56 +52,77 @@ namespace GunnerModPC
             Texture2D[] textures = Resources.FindObjectsOfTypeAll<Texture2D>();
             LoggerInstance.Msg($"Found {textures.Length} Texture2Ds.");
             for(int i = 0; i < textures.Length; ++i) {
-                string texName = textures[i].name;
+                Texture2D texture = textures[i];
+                string texName = texture.name;
                 if (replacements.Contains(texName))
                 {
                     string filePath = folderPath + texName + imageExtension;
-                    if (!loaded.ContainsKey(texName))
+                    if (!loaded.TryGetValue(texName, out ReplacedTexture replacedTexture))
                     {
-                        LoggerInstance.Msg($"Replacement texture for {texName} has not yet been loaded, reading from file...");
+                        LoggerInstance.Msg($"Replacement texture for \"{texName}\" has not yet been loaded, reading from file...");
                         byte[] data = File.ReadAllBytes(filePath);
 
                         // This takes a long time, but it only has to be done once during a run
-                        if (!textures[i].LoadImage(data, true)) {
+                        if (!texture.LoadImage(data, true))
+                        {
                             LoggerInstance.Error("Failed to upload replacement texture into the GPU memory!");
                         }
-
-                        byte[] hash = { 0 };
-                        if (reloadChangedTextures.Value)
+                        // Only mark as loaded if it was uploaded to the GPU succesfully
+                        else
                         {
-                            using (MD5 md5 = MD5.Create())
+                            byte[] hash = { 0 };
+                            if (reloadChangedTextures.Value)
                             {
-                                hash = md5.ComputeHash(data);
+                                using (MD5 md5 = MD5.Create())
+                                {
+                                    hash = md5.ComputeHash(data);
+                                }
+                                LoggerInstance.Msg($"Calculated hash for \"{texName}\": {HashToString(hash)}");
                             }
-                            LoggerInstance.Msg($"Calculated hash for {texName}: {HashToString(hash)}");
+
+                            HashSet<int> instances = new HashSet<int>
+                            {
+                                texture.GetInstanceID()
+                            };
+                            loaded[texName] = new ReplacedTexture { hash = hash, texture = texture, instances = instances };
                         }
-                        
-                        loaded[texName] = hash;
                     }
                     else
                     {
-                        if (reloadChangedTextures.Value)
+                        // Multiple textures can have the same name, so we have to check if this was already replaced or not
+                        foreach (var item in replacedTexture.instances)
+                        {
+                            LoggerInstance.Msg(item);
+                        }
+                        if (replacedTexture.instances.Add(texture.GetInstanceID()))
+                        {
+                            LoggerInstance.Msg($"Copying already replaced texture \"{texName}\", as a new Texture2D with the same name but a different ID was found...");
+                            Graphics.CopyTexture(replacedTexture.texture, texture);
+                        }
+                        else if (reloadChangedTextures.Value)
                         {
                             byte[] data = File.ReadAllBytes(filePath);
                             using (MD5 md5 = MD5.Create())
                             {
                                 byte[] newHash = md5.ComputeHash(data);
-                                byte[] oldHash = loaded[texName];
+                                ReplacedTexture loadedTexture = loaded[texName];
+                                byte[] oldHash = loadedTexture.hash;
                                 if (!newHash.SequenceEqual(oldHash))
                                 {
-                                    LoggerInstance.Msg($"Hash for {texName} changed! Old hash {HashToString(oldHash)}, new hash: {HashToString(newHash)}. Loading new texture...");
+                                    LoggerInstance.Msg($"Hash for \"{texName}\" changed! Old hash {HashToString(oldHash)}, new hash: {HashToString(newHash)}. Loading new texture...");
                                     textures[i].LoadImage(data);
-                                    loaded[texName] = newHash;
+                                    loadedTexture.hash = newHash;
+                                    loaded[texName] = loadedTexture;
                                 }
                                 else
                                 {
-                                    LoggerInstance.Msg($"Hash for {texName} is unchanged. Skipping...");
+                                    LoggerInstance.Msg($"Hash for \"{texName}\" is unchanged. Skipping...");
                                 }
                             }
                         }
                         else
                         {
-                            LoggerInstance.Msg($"Replacement texture for {texName} already loaded and reloading is disabled, skipping...");
+                            LoggerInstance.Msg($"Replacement texture for \"{texName}\" already loaded and reloading is disabled, skipping...");
                         }
                     }
                 }
