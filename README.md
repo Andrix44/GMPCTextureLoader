@@ -2,7 +2,7 @@
 
 ## Features
 - This mod provides an easy way to replace textures in any Unity game that uses IL2CCP code and .png textures.
-- A fork of [link](https://github.com/Andrix44/GMPCTextureLoader) that was only for Gunner, HEAT, PC!
+- A fork of [GMPCTextureLoader](https://github.com/Andrix44/GMPCTextureLoader) that was only for Gunner, HEAT, PC!
 
 ## Installation
 - Install MelonLoader: [link](https://github.com/LavaGang/MelonLoader.Installer/blob/master/README.md#how-to-install-re-install-or-update-melonloader).
