@@ -1,0 +1,489 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<RootNamespace>OpenTextureLoader</RootNamespace>
+		<LangVersion>default</LangVersion>
+		<IsPackable>false</IsPackable>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<AssemblyName>OpenTextureLoader</AssemblyName>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp-firstpass">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+		</Reference>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="AstarPathfindingProject">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\AstarPathfindingProject.dll</HintPath>
+		</Reference>
+		<Reference Include="AwesomeTechnologies.TouchReactSystemPro.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\AwesomeTechnologies.TouchReactSystemPro.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="AwesomeTechnologies.VegetationStudioPro.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\AwesomeTechnologies.VegetationStudioPro.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Cinemachine">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Cinemachine.dll</HintPath>
+		</Reference>
+		<Reference Include="com.rlabrecque.steamworks.net">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\com.rlabrecque.steamworks.net.dll</HintPath>
+		</Reference>
+		<Reference Include="Fusion.Addressables">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Fusion.Addressables.dll</HintPath>
+		</Reference>
+		<Reference Include="Fusion.Common">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Fusion.Common.dll</HintPath>
+		</Reference>
+		<Reference Include="Fusion.Realtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Fusion.Realtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Fusion.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Fusion.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Fusion.Sockets">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Fusion.Sockets.dll</HintPath>
+		</Reference>
+		<Reference Include="JBooth.MicroSplat.Core">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\JBooth.MicroSplat.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="MagicaClothV2">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\MagicaClothV2.dll</HintPath>
+		</Reference>
+		<Reference Include="NanoSockets">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\NanoSockets.dll</HintPath>
+		</Reference>
+		<Reference Include="NaughtyCharacter">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\NaughtyCharacter.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="Pathfinding.ClipperLib">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Pathfinding.ClipperLib.dll</HintPath>
+		</Reference>
+		<Reference Include="Pathfinding.Ionic.Zip.Reduced">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+		</Reference>
+		<Reference Include="Pathfinding.Poly2Tri">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Pathfinding.Poly2Tri.dll</HintPath>
+		</Reference>
+		<Reference Include="Photon3Unity3D">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Photon3Unity3D.dll</HintPath>
+		</Reference>
+		<Reference Include="PhotonChat">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\PhotonChat.dll</HintPath>
+		</Reference>
+		<Reference Include="PhotonRealtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\PhotonRealtime.dll</HintPath>
+		</Reference>
+		<Reference Include="PlayFab">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\PlayFab.dll</HintPath>
+		</Reference>
+		<Reference Include="Purchasing.Common">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Purchasing.Common.dll</HintPath>
+		</Reference>
+		<Reference Include="SandSailorStudio">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\SandSailorStudio.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.AI.Navigation">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.AI.Navigation.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Analytics.DataPrivacy">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Analytics.DataPrivacy.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Animation.Rigging">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Animation.Rigging.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Animation.Rigging.DocCodeExamples">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Animation.Rigging.DocCodeExamples.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Burst">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Burst.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Burst.Unsafe">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Burst.Unsafe.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Collections">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Collections.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Collections.LowLevel.ILSupport">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.DemoTeam.Attributes">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.DemoTeam.Attributes.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.DemoTeam.DigitalHuman.ShaderLibrary">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.DemoTeam.DigitalHuman.ShaderLibrary.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.InputSystem">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.InputSystem.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.InputSystem.ForUI">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.InputSystem.ForUI.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Jobs">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Jobs.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Mathematics">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Mathematics.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.MemoryProfiler">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.MemoryProfiler.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Postprocessing.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Postprocessing.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.ProGrids">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.ProGrids.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Recorder.Base">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Recorder.Base.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Recorder">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Recorder.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.RenderPipelines.Core.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.RenderPipelines.HighDefinition.Config.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Analytics">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Analytics.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Analytics">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Analytics.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Configuration">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Configuration.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Device">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Device.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Environments">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Environments.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Environments.Internal">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Environments.Internal.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Internal">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Internal.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Networking">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Networking.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Registration">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Registration.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Scheduler">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Scheduler.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Telemetry">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Telemetry.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Services.Core.Threading">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Services.Core.Threading.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.TextMeshPro">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Timeline">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.Timeline.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.VisualEffectGraph.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AccessibilityModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AIModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AndroidJNIModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AnimationModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ARModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ARModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AssetBundleModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AudioModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ClothModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ClusterInputModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ClusterRendererModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ContentLoadModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ContentLoadModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CrashReportingModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.DirectorModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.DSPGraphModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.DSPGraphModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.GameCenterModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.GameCenterModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.GIModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.GIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.GridModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.GridModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.HotReloadModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ImageConversionModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.IMGUIModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.InputLegacyModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.InputModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.InputModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.JSONSerializeModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.LocalizationModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.LocalizationModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.NVIDIAModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.NVIDIAModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ParticleSystemModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.PerformanceReportingModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Physics2DModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.PhysicsModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ProfilerModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.PropertiesModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.PropertiesModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.AppleCore">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.AppleCore.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.AppleMacosStub">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.AppleMacosStub.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.AppleStub">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.AppleStub.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.Codeless">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.Codeless.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.SecurityCore">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.SecurityCore.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.SecurityStub">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.SecurityStub.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.Stores">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.Stores.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.WinRTCore">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.WinRTCore.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Purchasing.WinRTStub">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.Purchasing.WinRTStub.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ScreenCaptureModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SharedInternalsModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SpatialTracking">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.SpatialTracking.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SpriteMaskModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SpriteShapeModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.StreamingModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.StreamingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SubstanceModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SubsystemsModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TerrainModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TerrainPhysicsModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextCoreFontEngineModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextCoreTextEngineModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextRenderingModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TilemapModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TLSModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UI">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UI.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIElementsModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UmbraModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityAnalyticsCommonModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityAnalyticsModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityConnectModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityCurlModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityCurlModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityTestProtocolModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestAudioModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestTextureModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestWWWModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VehiclesModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VFXModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VideoModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VirtualTexturingModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.VirtualTexturingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VRModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.WindModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.WindModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.XR.LegacyInputHelpers">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.XRModule">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\UnityEngine.XRModule.dll</HintPath>
+		</Reference>
+		<Reference Include="VFXGraph.OutputEventHandlers">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\VFXGraph.OutputEventHandlers.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualEffectGraphExtras.Runtime">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\VisualEffectGraphExtras.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="XNode">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\Aska_Data\Managed\XNode.dll</HintPath>
+		</Reference>
+		<Reference Include="MelonLoader">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\MelonLoader\net35\MelonLoader.dll</HintPath>
+		</Reference>
+		<Reference Include="0Harmony">
+			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\ASKA\MelonLoader\net35\0Harmony.dll</HintPath>
+		</Reference>
+
+	</ItemGroup>
+
+	<PropertyGroup>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="OpenTextMod.cs" />
+	</ItemGroup>
+	
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="COPY &quot;$(TargetPath)&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\ASKA\Mods&quot;" />
+	</Target>
+</Project>

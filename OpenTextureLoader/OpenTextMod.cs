@@ -1,5 +1,5 @@
 ﻿using MelonLoader;
-using GunnerModPC;
+using OpenTextMod;
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
@@ -7,11 +7,10 @@ using System.Linq;
 using System.Security.Cryptography;
 using System;
 
-[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.0.1", "Andrix")]
-[assembly: MelonPriority(101)]
-[assembly: MelonGame("Radian Simulations LLC", "GHPC")]
+[assembly: MelonInfo(typeof(OpenTextureLoader), "Open version of GMPCTextureLoader by Andrix44", "0.3.0", "Axeblade346")]
 
-namespace GunnerModPC
+
+namespace OpenTextMod
 {
     struct ReplacedTexture
     {
@@ -20,19 +19,19 @@ namespace GunnerModPC
         public HashSet<int> instances;
     }
 
-    public class GMPCTextureLoader : MelonMod
+    public class OpenTextureLoader : MelonMod
     {
         static MelonPreferences_Category config;
         static MelonPreferences_Entry<bool> reloadChangedTextures;
 
         static Dictionary<string, ReplacedTexture> loaded;
 
-        readonly string folderPath = "Mods/GMPCTextureLoader/";
+        readonly string folderPath = "Mods/OpenTextureLoader/";
         readonly string imageExtension = ".png";
 
         public override void OnInitializeMelon()
         {
-            config = MelonPreferences.CreateCategory("GMPCTextureLoaderConfig");
+            config = MelonPreferences.CreateCategory("OpenTextureLoaderConfig");
             reloadChangedTextures = config.CreateEntry<bool>("reloadChangedTextures", false);
             reloadChangedTextures.Description = "When this is enabled, the mod will hash the texture files to see if they changed when loading a new scene. This is useful when designing textures, but can slow down map loading when a lot of data has to be processed.";
 
@@ -43,7 +42,7 @@ namespace GunnerModPC
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            
+
             LoggerInstance.Msg($"Loading texture replacements for scene \"{sceneName}\".");
 
             HashSet<string> replacements = Directory.GetFiles(folderPath, "*" + imageExtension).Select(p => Path.GetFileNameWithoutExtension(p)).ToHashSet();
@@ -51,7 +50,8 @@ namespace GunnerModPC
 
             Texture2D[] textures = Resources.FindObjectsOfTypeAll<Texture2D>();
             LoggerInstance.Msg($"Found {textures.Length} Texture2Ds.");
-            for(int i = 0; i < textures.Length; ++i) {
+            for (int i = 0; i < textures.Length; ++i)
+            {
                 Texture2D texture = textures[i];
                 string texName = texture.name;
                 if (replacements.Contains(texName))
