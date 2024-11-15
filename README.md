@@ -5,7 +5,7 @@
 - A fork of [GMPCTextureLoader](https://github.com/Andrix44/GMPCTextureLoader) that was only for Gunner, HEAT, PC!
 
 ## Installation
-- Install MelonLoader: [link](https://github.com/LavaGang/MelonLoader.Installer/blob/master/README.md#how-to-install-re-install-or-update-melonloader).
+- Install MelonLoader: [link](https://melonwiki.xyz/#/README?id=automated-installation).
 - Download `OpenTextureLoader.dll` from the latest release and copy it to `<game folder>\Mods`.
 - Run the mod once to generate it.
 - Copy your `*.png` files into `<game folder>\Mods\TextureLoader`. They must have the same name as the `Texture2D` objects that they belong to. It's probably a good idea to keep the replacement textures the same dimensions as the originals.
