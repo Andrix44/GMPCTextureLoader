@@ -101,7 +101,8 @@ namespace GunnerModPC
                         byte[] data = File.ReadAllBytes(filePath);
 
                         // This takes a long time, but it only has to be done once during a run
-                        if (!texture.LoadImage(data, true))
+                        // Setting this from true to false will not display images with duplicate names in UnityExplorer, but will ensure that your image replaces textures as intended 
+                        if (!texture.LoadImage(data, false))
                         {
                             LoggerInstance.Error("Failed to upload replacement texture into the GPU memory!");
                         }
@@ -137,7 +138,7 @@ namespace GunnerModPC
                                 if (!newHash.SequenceEqual(oldHash))
                                 {
                                     LoggerInstance.Msg($"Hash for \"{texName}\" changed! Old hash {HashToString(oldHash)}, new hash: {HashToString(newHash)}. Loading new texture...");
-                                    texture.LoadImage(data, true);
+                                    texture.LoadImage(data, false);
                                     loaded[texName] = new ReplacedTexture { hash = newHash, texture = texture, instances = new HashSet<int> { texture.GetInstanceID() } };
                                 }
                                 else if (replacedTexture.texture.GetInstanceID() != texture.GetInstanceID())
