@@ -10,7 +10,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.1.2", "Andrix")]
+[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.1.3", "Andrix")]
 [assembly: MelonPriority(101)]
 [assembly: MelonGame("Radian Simulations LLC", "GHPC")]
 
@@ -76,6 +76,14 @@ namespace GunnerModPC
             {
                 LoggerInstance.Msg($"Texture loader handler is being unloaded together with scene {handlerInstalledForScene}, a new one can now be installed.");
                 handlerInstalledForScene = notInstalled;
+
+                // Unity resets texture data when unloading a scene so we have to clear the instance tracking here. Cached file data is kept to avoid re-reading from disk.
+                foreach (string key in loaded.Keys.ToList())
+                {
+                    ReplacedTexture rt = loaded[key];
+                    rt.instances = new HashSet<int>();
+                    loaded[key] = rt;
+                }
             }
         }
 
