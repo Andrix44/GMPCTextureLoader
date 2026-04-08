@@ -10,7 +10,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.1.3", "Andrix")]
+[assembly: MelonInfo(typeof(GMPCTextureLoader), "Gunner, Mod, PC! Texture loader", "1.2.0", "Andrix")]
 [assembly: MelonPriority(101)]
 [assembly: MelonGame("Radian Simulations LLC", "GHPC")]
 
@@ -19,8 +19,7 @@ namespace GunnerModPC
     struct ReplacedTexture
     {
         public byte[] hash;
-        public byte[] data;      
-        public HashSet<int> instances;
+        public byte[] data;
     }
 
     public class GMPCTextureLoader : MelonMod
@@ -35,11 +34,14 @@ namespace GunnerModPC
         readonly string folderPath = "Mods/GMPCTextureLoader/";
         readonly string imageExtension = ".png";
 
+        static MD5 md5 = MD5.Create();
+
         public override void OnInitializeMelon()
         {
             config = MelonPreferences.CreateCategory("GMPCTextureLoaderConfig");
             reloadChangedTextures = config.CreateEntry<bool>("reloadChangedTextures", false);
-            reloadChangedTextures.Description = "When this is enabled, the mod will hash the texture files to see if they changed when loading a new scene. This is useful when designing textures, but can slow down map loading when a lot of data has to be processed.";
+            reloadChangedTextures.Description =
+                "When enabled, hashes texture files to detect changes. Useful for development, but may slow loading.";
 
             loaded = new Dictionary<string, ReplacedTexture>();
             handlerInstalledForScene = notInstalled;
@@ -51,9 +53,12 @@ namespace GunnerModPC
         {
             if (handlerInstalledForScene != notInstalled)
             {
-                LoggerInstance.Msg($"Texture loader handler is already installed for scene {handlerInstalledForScene}, it must be unloaded first.");
+                LoggerInstance.Msg($"Texture loader handler already installed for {handlerInstalledForScene}.");
             }
-            else if (sceneName == "LOADER_INITIAL" || sceneName == "LOADER_MENU") return;
+            else if (sceneName == "LOADER_INITIAL" || sceneName == "LOADER_MENU")
+            {
+                return;
+            }
             else if (sceneName == "MainMenu2_Scene" || sceneName == "t64_menu" || sceneName == "MainMenu2-1_Scene")
             {
                 LoggerInstance.Msg($"Patching textures in main menu {sceneName}.");
@@ -61,12 +66,14 @@ namespace GunnerModPC
             }
             else
             {
-                var status = StateController.RunOrDefer(GameState.GameInitialization, new GameStateEventHandler(LoadTextures));
-                LoggerInstance.Msg($"Trying to add texture loader event handler on scene {sceneName}, result: {status}");
+                var status = StateController.RunOrDefer(
+                    GameState.GameInitialization,
+                    new GameStateEventHandler(LoadTextures));
+
+                LoggerInstance.Msg($"Adding texture loader handler on scene {sceneName}, result: {status}");
+
                 if (status != GameStateInvocationStatus.Fail)
-                {
                     handlerInstalledForScene = sceneName;
-                }
             }
         }
 
@@ -74,16 +81,8 @@ namespace GunnerModPC
         {
             if (handlerInstalledForScene != notInstalled)
             {
-                LoggerInstance.Msg($"Texture loader handler is being unloaded together with scene {handlerInstalledForScene}, a new one can now be installed.");
+                LoggerInstance.Msg($"Unloading texture loader handler for {handlerInstalledForScene}.");
                 handlerInstalledForScene = notInstalled;
-
-                // Unity resets texture data when unloading a scene so we have to clear the instance tracking here. Cached file data is kept to avoid re-reading from disk.
-                foreach (string key in loaded.Keys.ToList())
-                {
-                    ReplacedTexture rt = loaded[key];
-                    rt.instances = new HashSet<int>();
-                    loaded[key] = rt;
-                }
             }
         }
 
@@ -91,11 +90,31 @@ namespace GunnerModPC
         {
             LoggerInstance.Msg($"GameState is {state}, loading texture replacements.");
 
-            HashSet<string> replacements = Directory.GetFiles(folderPath, "*" + imageExtension).Select(p => Path.GetFileNameWithoutExtension(p)).ToHashSet();
-            LoggerInstance.Msg($"Found {replacements.Count} *{imageExtension} texture replacements in \"{folderPath}\".");
+            HashSet<string> replacements = Directory
+                .GetFiles(folderPath, "*" + imageExtension)
+                .Select(p => Path.GetFileNameWithoutExtension(p))
+                .ToHashSet();
+
+            LoggerInstance.Msg($"Found {replacements.Count} replacement textures.");
+
+            Dictionary<string, byte[]> diskDataCache = new Dictionary<string, byte[]>();
+            Dictionary<string, byte[]> diskHashCache = new Dictionary<string, byte[]>();
+
+            foreach (string texName in replacements)
+            {
+                string filePath = Path.Combine(folderPath, texName + imageExtension);
+
+                byte[] data = File.ReadAllBytes(filePath);
+                diskDataCache[texName] = data;
+
+                if (reloadChangedTextures.Value)
+                    diskHashCache[texName] = ComputeHash(data);
+            }
 
             Texture2D[] textures = Resources.FindObjectsOfTypeAll<Texture2D>();
             LoggerInstance.Msg($"Found {textures.Length} Texture2Ds.");
+
+            HashSet<int> appliedThisRun = new HashSet<int>();
 
             for (int i = 0; i < textures.Length; ++i)
             {
@@ -105,94 +124,81 @@ namespace GunnerModPC
                 if (!replacements.Contains(texName))
                     continue;
 
-                string filePath = folderPath + texName + imageExtension;
                 int instanceId = texture.GetInstanceID();
+
+                if (appliedThisRun.Contains(instanceId))
+                    continue;
+
+                byte[] diskData = diskDataCache[texName];
 
                 if (!loaded.TryGetValue(texName, out ReplacedTexture replacedTexture))
                 {
-                    LoggerInstance.Msg($"Replacement texture for \"{texName}\" has not yet been loaded, reading from file...");
-                    byte[] data = File.ReadAllBytes(filePath);
+                    LoggerInstance.Msg($"Loading new replacement for \"{texName}\"...");
 
-                    if (!texture.LoadImage(data, false))
+                    if (!texture.LoadImage(diskData, false))
                     {
-                        LoggerInstance.Error($"Failed to upload replacement texture \"{texName}\" into GPU memory!");
+                        LoggerInstance.Error($"Failed to upload texture \"{texName}\"!");
                     }
                     else
                     {
-                        byte[] hash = ComputeHashIfNeeded(data);
-                        LoggerInstance.Msg($"Loaded replacement texture \"{texName}\" (instance {instanceId}){(reloadChangedTextures.Value ? $", hash: {HashToString(hash)}" : "")}.");
+                        byte[] hash = reloadChangedTextures.Value ? diskHashCache[texName] : new byte[] { 0 };
+
                         loaded[texName] = new ReplacedTexture
                         {
                             hash = hash,
-                            data = data,
-                            instances = new HashSet<int> { instanceId }
+                            data = diskData
                         };
+
+                        appliedThisRun.Add(instanceId);
                     }
                 }
                 else
                 {
                     if (reloadChangedTextures.Value)
                     {
-                        byte[] diskData = File.ReadAllBytes(filePath);
-                        byte[] newHash = ComputeHash(diskData);
-                        byte[] oldHash = replacedTexture.hash;
+                        byte[] newHash = diskHashCache[texName];
 
-                        if (!newHash.SequenceEqual(oldHash))
+                        if (!newHash.SequenceEqual(replacedTexture.hash))
                         {
-                            LoggerInstance.Msg($"Hash changed for \"{texName}\"! Old: {HashToString(oldHash)}, new: {HashToString(newHash)}. Reloading...");
+                            LoggerInstance.Msg($"Detected change in \"{texName}\", reloading...");
+
                             texture.LoadImage(diskData, false);
+
                             loaded[texName] = new ReplacedTexture
                             {
                                 hash = newHash,
-                                data = diskData,
-                                instances = new HashSet<int> { instanceId }
+                                data = diskData
                             };
-                        }
-                        else if (!replacedTexture.instances.Contains(instanceId))
-                        {
-                            LoggerInstance.Msg($"Applying cached replacement to new instance of \"{texName}\" (instance {instanceId})...");
-                            texture.LoadImage(replacedTexture.data, false);
-                            replacedTexture.instances.Add(instanceId);
-                            loaded[texName] = replacedTexture;
                         }
                         else
                         {
-                            LoggerInstance.Msg($"Texture \"{texName}\" is unchanged and instance {instanceId} has already been replaced.");
+                            texture.LoadImage(replacedTexture.data, false);
                         }
-                    }
-                    else if (!replacedTexture.instances.Contains(instanceId))
-                    {
-                        LoggerInstance.Msg($"Applying cached replacement to new instance of \"{texName}\" (instance {instanceId})...");
-                        texture.LoadImage(replacedTexture.data, false);
-                        replacedTexture.instances.Add(instanceId);
-                        loaded[texName] = replacedTexture;
                     }
                     else
                     {
-                        LoggerInstance.Msg($"Replacement texture \"{texName}\" has already been loaded for instance {instanceId}.");
+                        texture.LoadImage(replacedTexture.data, false);
                     }
+
+                    appliedThisRun.Add(instanceId);
                 }
+
+                // This stops stutter
+                if (i % 50 == 0)
+                    yield return null;
             }
 
-            yield break;
+            LoggerInstance.Msg("Texture loading complete.");
         }
 
         private byte[] ComputeHash(byte[] data)
         {
-            using (MD5 md5 = MD5.Create())
-                return md5.ComputeHash(data);
-        }
-
-        private byte[] ComputeHashIfNeeded(byte[] data)
-        {
-            if (reloadChangedTextures.Value)
-                return ComputeHash(data);
-            return new byte[] { 0 };
+            return md5.ComputeHash(data);
         }
 
         private string HashToString(byte[] hash)
         {
-            return BitConverter.ToString(hash).Replace("-", String.Empty);
+            return BitConverter.ToString(hash).Replace("-", "");
         }
     }
 }
