@@ -160,8 +160,7 @@ namespace GunnerModPC
 
                         if (!newHash.SequenceEqual(replacedTexture.hash))
                         {
-                            LoggerInstance.Msg($"Detected change in \"{texName}\", reloading...");
-
+                            LoggerInstance.Msg($"Hash changed for \"{texName}\"! Old: {HashToString(oldHash)}, new: {HashToString(newHash)}. Reloading...");
                             texture.LoadImage(diskData, false);
 
                             loaded[texName] = new ReplacedTexture
