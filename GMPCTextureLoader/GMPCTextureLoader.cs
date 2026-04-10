@@ -108,7 +108,7 @@ namespace GunnerModPC
                 diskDataCache[texName] = data;
 
                 if (reloadChangedTextures.Value)
-                    diskHashCache[texName] = ComputeHash(data);
+                    diskHashCache[texName] = md5.ComputeHash(data);
             }
 
             Texture2D[] textures = Resources.FindObjectsOfTypeAll<Texture2D>();
@@ -191,10 +191,7 @@ namespace GunnerModPC
             LoggerInstance.Msg("Texture loading complete.");
         }
 
-        private byte[] ComputeHash(byte[] data)
-        {
-            return md5.ComputeHash(data);
-        }
+    
 
         private string HashToString(byte[] hash)
         {
